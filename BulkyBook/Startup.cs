@@ -10,6 +10,7 @@ using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.DataAccess.Repository;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using BulkyBook.Utility;
+using Microsoft.CodeAnalysis.Options;
 
 namespace BulkyBook
 {
@@ -30,10 +31,27 @@ namespace BulkyBook
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<IEmailSender, EmailSenders>();
+            services.Configure<EmailOptions>(Configuration);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+            services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppId = "2722890997995307";
+                options.AppSecret = "6c53dbb0432e6c3c10ef6348c0db5738";
+            });
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "1066617559223-0v3pnocdiefjbm4gc015971rkimbtcje.apps.googleusercontent.com";
+                options.ClientSecret = "Le4TkCOobartwnG6cwF4N3KY";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
