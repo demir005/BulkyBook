@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200325224623_AddCategoryToDb.cs" />
     <Compile Remove="Migrations\20200325224623_AddCategoryToDb.Designer.cs" />
+    <Compile Remove="Migrations\20200629083031_addValidationOnOrderHeader.cs" />
+    <Compile Remove="Migrations\20200629083031_addValidationOnOrderHeader.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

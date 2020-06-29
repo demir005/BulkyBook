@@ -226,7 +226,10 @@ namespace BulkyBook.Areas.Customer.Controllers
 
             if(stripeToken==null)
             {
-
+                //order will be created for delay payment for authorized company
+                ShoppingCartVM.OrderHeader.PaymentDate = DateTime.Now.AddDays(30);
+                ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
+                ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
             }
             else
             {
